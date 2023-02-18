@@ -12,7 +12,7 @@ urlpatterns = [
 ]
 
 handler404 = 'core.views.page_not_found'
-CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
+handler403 = 'core.views.csrf_failure'
 
 if settings.DEBUG:
     urlpatterns += static(

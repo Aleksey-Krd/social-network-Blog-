@@ -12,7 +12,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 SECRET_KEY = get_random_secret_key()
 
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -112,6 +112,8 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
 
 CACHES = {
     'default': {
