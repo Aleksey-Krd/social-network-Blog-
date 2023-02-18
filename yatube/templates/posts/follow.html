@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %} Подписчики {% endblock %}
+{% block content %}
+{% include 'posts/includes/switcher.html' with follow=True%}
+<div class="container py-5">
+  <article>
+    {% for post in page_obj %} 
+    {% include 'posts/includes/body_follow_posts.html' %}
+    {% endfor %} 
+  </article>
+  {% include 'posts/includes/paginator.html' %}
+</div>
+{% endblock %}

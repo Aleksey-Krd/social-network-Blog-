@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %} Пост {{ post.text|truncatechars:30 }} {% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+    {% include 'posts/includes/body_post_detail_info.html' %}
+    {% include 'posts/includes/body_post_detail.html' %}
+  </div>     
+</div>
+{% endblock %}

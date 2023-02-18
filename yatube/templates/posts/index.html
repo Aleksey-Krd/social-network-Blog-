@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load cache %}
+{% block title %} Последние обновления на сайте {% endblock %}
+{% block content %}
+{% include 'posts/includes/switcher.html' with index=True %}
+<div class="container py-5">
+  <h1>Записи сообщества: Лев Толстой – зеркало русской революции</h1>
+  <p>Группа тайных поклонников графа</p>
+  {% cache 20 index_page %}
+  <article>
+    {% for post in page_obj %} 
+      {% include 'posts/includes/body_index.html' %}
+    {% endfor %} 
+  </article>
+  {% include 'posts/includes/paginator.html' %}
+  {% endcache %}
+</div>
+{% endblock %}

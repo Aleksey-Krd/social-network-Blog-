@@ -1,0 +1,45 @@
+{% load thumbnail %}
+{% load user_filters %}
+<article class="col-12 col-md-9">
+    {% thumbnail post.image "960x339" crop="center" upscale=True as im %}
+      <img class="card-img my-2" src="{{ im.url }}">
+    {% endthumbnail %}
+      <p>
+        {{ post.text }}
+      </p>
+      {% if request.user == post.author %}
+        <a class="btn btn-primary" href="{% url 'posts:post_update' post.id %}">
+          редактировать запись
+        </a>
+      {% endif %}
+      {% if request.user.is_authenticated %}
+      {% for comment in comments %}
+      <div class="media mb-4">
+        <div class="media-body">
+          <h5 class="mt-0">
+            <a href="{% url 'posts:profile' post.author.username %}">
+              {{ comment.author }}
+            </a>
+          </h5>
+          <p>
+            {{ comment.text }}
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+      <div class="card my-4">
+        <h5 class="card-header">Добавить комментарий:</h5>
+        <div class="card-body">
+          <form method="post" action="{% url 'posts:add_comment' post_id=post.pk %}">
+            {% csrf_token %}     
+            {% for field in form %}
+            <div class="form-group mb-2">
+              {{ field|addclass:"form-control" }}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Отправить</button>
+          </form>
+        </div>
+      </div>
+      {% endif %}              
+    </article>

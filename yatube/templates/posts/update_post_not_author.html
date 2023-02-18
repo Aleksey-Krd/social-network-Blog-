@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Редактировать пост {% endblock %}
+{% block content %}
+{% include 'posts/includes/open_divs.html' %}
+<div class="card-header">       
+  Редактирование поста запрещено             
+</div>
+  <div class="card-body"> 
+    <p>
+      Нет доступа к редактированию поста, вы не являетесь его автором
+    </p>
+  </div>
+{% include 'posts/includes/close_divs.html' %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Редактировать пост {% endblock %}
+{% block content %}
+{% include 'posts/includes/open_divs.html' %}
+<div class="card-header">       
+  Новый пост             
+</div>
+<div class="card-body">    
+
+  <form method="post" enctype="multipart/form-data"
+  {% if action_url %}
+  action="{% url action_url %}">
+  {% endif %}
+  >
+    {% csrf_token %}           
+    <div class="form-group row my-3 p-3">
+      {% for field in form %} 
+        {% include 'posts/includes/fields_form.html' %}
+      {% endfor %}
+      </div>
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary">
+        Сохранить
+      </button>
+    </div>
+  </form>
+</div>
+{% include 'posts/includes/close_divs.html' %}
+{% endblock %}
