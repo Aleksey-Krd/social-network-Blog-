@@ -404,8 +404,8 @@ class PostsTests(TestCase):
         response_unfollow = self.unfollower.get(
             reverse(c.URL_NAME_FOLLOW)
         )
-        self.assertTemplateUsed(response_follow, 'posts/follow.html')
-        self.assertTemplateUsed(response_unfollow, 'posts/follow_not.html')
+        self.assertEqual(len(response_follow.context['page_obj']), 1)
+        self.assertEqual(len(response_unfollow.context['page_obj']), 0)
 
 
 class PaginatorViewsTest(TestCase):

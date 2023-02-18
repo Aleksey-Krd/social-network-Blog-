@@ -122,7 +122,7 @@ def follow_index(request):
         'page_obj': get_page(posts, request),
     }
     if len(context['page_obj']) == 0:
-        return render(request, 'posts/follow_not.html')
+        return render(request, 'posts/follow_not.html', context)
     return render(request, 'posts/follow.html', context)
 
 
