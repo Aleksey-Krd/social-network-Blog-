@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from mixer.backend.django import mixer
 from django.core.cache import cache
 
-from posts.models import Post, Group, User, Comments, Follow
+from posts.models import Post, Group, User, Comment, Follow
 from posts import constants as c
 
 
@@ -355,7 +355,7 @@ class PostsTests(TestCase):
         """
         Проверяем, что комментарий добавляется к посту
         """
-        Comments.objects.create(
+        Comment.objects.create(
             text='test',
             author=self.user,
             post=self.post

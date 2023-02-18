@@ -47,7 +47,7 @@ class Post(CreatedModel):
         blank=True
     )
     comment = models.ForeignKey(
-        'Comments',
+        'Comment',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
@@ -64,7 +64,7 @@ class Post(CreatedModel):
         return self.text[:15]
 
 
-class Comments(CreatedModel):
+class Comment(CreatedModel):
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
