@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Post, Group, User, Follow
 from .forms import PostForm, CommentForm
@@ -7,7 +8,7 @@ from .utils import get_page
 
 
 def index(request):
-    posts_list = Post.objects.select_related('author').all()
+    posts_list = Post.objects.select_related('author')
     page_obj = get_page(posts_list, request)
     context = {
         'page_obj': page_obj,
@@ -30,10 +31,9 @@ def group_posts(request, slug):
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     user_post_list = user.user.all()
-    if request.user.is_authenticated:
-        following = request.user.follower.filter(author=user).exists()
-    else:
-        following = False
+    following = request.user.is_authenticated and Follow.objects.filter(
+        user=request.user,
+        author=user).exists()
     page_obj = get_page(user_post_list, request)
     context = {
         'page_obj': page_obj,
@@ -48,13 +48,9 @@ def profile(request, username):
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     form = CommentForm(request.POST or None)
-    comments_1 = post.comments.all()
-    posts_count = post.author.user.all()
     context = {
         'post': post,
-        'posts_count': posts_count,
         'form': form,
-        'comments': comments_1,
     }
     return render(request, 'posts/post_detail.html', context)
 
@@ -139,9 +135,10 @@ def profile_follow(request, username):
 
 @login_required
 def profile_unfollow(request, username):
-    get_object_or_404(
-        Follow,
-        user=request.user,
-        author__username=username,
-    ).delete()
-    return redirect('posts:profile', username)
+    try:
+        Follow.objects.get(
+            user=request.user,
+            author__username=username).delete()
+        return redirect('posts:profile', username)
+    except ObjectDoesNotExist:
+        return redirect('posts:profile', username)
