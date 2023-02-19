@@ -190,9 +190,9 @@ class PostsTests(TestCase):
                     msg='Неверные данные в словаре контекста post_detail'
                 )
 
-        posts_count = response.context['posts_count']
+        posts_count = response.context['post']
         self.assertEqual(
-            len(posts_count),
+            len(posts_count.author.user.all()),
             len(self.post.author.user.all()),
             msg='Неверно отображается количество постов в post_detail'
         )
