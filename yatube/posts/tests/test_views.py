@@ -160,9 +160,9 @@ class PostsTests(TestCase):
             self.post.author.username,
             msg='Неверное отображение автора поста в профиле'
         )
-        post_list = response.context['user_post_list']
+        post_list = response.context['user']
         self.assertEqual(
-            len(post_list),
+            len(post_list.user.all()),
             len(self.user.user.all()),
             msg='Неверное количество постов в профиле'
         )

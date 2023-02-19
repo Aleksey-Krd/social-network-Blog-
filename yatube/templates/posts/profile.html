@@ -5,7 +5,7 @@
 <div class="container py-5">
   <div class="mb-5">        
     <h1>Все посты пользователя {{ author.username }} </h1>
-    <h3>Всего постов: {{ user_post_list.count }} </h3>
+    <h3>Всего постов: {{ user.user.count }} </h3>
     <h4>Всего комментариев {{ author.comments.count }} </h3>
     <h5>Всего подписчиков {{ author.following.count }} </h4>
     {% if request.user != author and request.user.is_authenticated %}
